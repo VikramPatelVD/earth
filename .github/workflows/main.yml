@@ -1,0 +1,36 @@
+name: Build, publish and deploy project to server
+on: [push]
+
+jobs:
+  build_and_deploy:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0
+
+      # - name: Publish .NET Project
+      #   run: dotnet publish -c Release -o .\publish
+
+      # - name: Wipe assets folder on server
+      #   run: |
+      #     # 1. Create a temporary empty folder on the GitHub runner
+      #     New-Item -ItemType Directory -Force -Path "${{ github.workspace }}\empty_assets"
+          
+      #     # 2. Sync this empty folder to the server's assets folder (this deletes everything inside the destination)
+      #     $msdeploy = "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+          
+      #     & $msdeploy -verb:sync -source:dirPath="${{ github.workspace }}\empty_assets" -dest:dirPath="faswinsoftware-001-subsite6/wwwroot/assets",computerName="https://win8104.site4now.net:8172/msdeploy.axd?site=faswinsoftware-001-subsite6",userName="faswinsoftware-001",password="Fasweb@2024",authType="Basic"
+
+      - name: Deploy
+        uses: talunzhang/auto-web-deploy@v1.0.1
+        with:
+          website-name: faswinsoftware-001-subsite7
+          server-computer-name: https://win8104.site4now.net:8172
+          server-username: faswinsoftware-001
+          server-password: Fasweb@2024
+          source-path: \
+          target-path: /
