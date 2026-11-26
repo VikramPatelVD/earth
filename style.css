@@ -85,11 +85,9 @@ body {
 }
 
 .btn-portal {
-    /* background-color: #f39c12; */
     background-color: #1a252f;
     padding: 8px 20px;
     border-radius: 4px;
-    /* font-weight: bold !important; */
     font-weight: lighter;
     font-size: small;
 }
@@ -159,24 +157,110 @@ body {
     border-bottom: 4px solid #f39c12;
 }
 
-/* Gallery Grid */
+/* Gallery Section - Line by Line 100% Full Image View */
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
+    grid-template-columns: 1fr; /* One image per line */
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.gallery-grid img {
+.gallery-item {
+    background: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.gallery-item img {
     width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 6px;
-    transition: transform 0.3s;
-    background-color: #ccc; /* Placeholder for transparent pngs */
+    height: auto; /* Preserves full aspect ratio without cropping */
+    max-width: 100%;
+    display: block;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
 }
 
-.gallery-grid img:hover {
-    transform: scale(1.03);
+.gallery-item img:hover {
+    opacity: 0.92;
+}
+
+/* Lightbox Overlay */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000; /* Above navbar and floating buttons */
+    background: rgba(0, 0, 0, 0.92);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    max-width: 92vw;
+    max-height: 92vh;
+    text-align: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 82vh;
+    object-fit: contain;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+}
+
+#lightbox-caption {
+    color: #f1f1f1;
+    margin-top: 12px;
+    font-size: 1rem;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 10px 16px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lightbox-close {
+    top: 20px;
+    right: 24px;
+    line-height: 1;
+}
+
+.lightbox-prev {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightbox-next {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* About Section */
@@ -337,7 +421,7 @@ body {
         flex-direction: column;
         padding: 20px 0;
     }
-    
+
     .nav-links.active { display: flex; }
     .nav-links li { margin: 10px 0; }
     .mobile-menu { display: block; }
